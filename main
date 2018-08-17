@@ -1,0 +1,164 @@
+<html>
+<head>
+    <title>Typing Is Loads Of Fun</title>
+</head>
+    <body>
+        
+        <h2>Type To Match The Letters On The Left</h2>
+        <table width="100%">
+            <tr>
+                <td width="50%" valign="top" height="400"><code id="matchthis" style="font-size:18px;">hello there</code></td>
+                <td width="50%" valign="top" height="400"><code id="demospace" style="font-size:18px;"></code></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">
+                    <br/><br/><br/><br/>
+                    <input type="text" onkeyup="myFunction()" id="fieldy" style="font-size:18px;">
+                </td>
+            </tr>
+        </table>
+        <br/><br/><br/><br/>
+        <button onclick="nextClicked()">Next</button>
+        <button onclick="surpriseMeClicked()">Surprise Me</button>
+        <button onclick="check()">Check My Typing</button>
+        
+        
+        
+            
+        
+            
+    </body>
+    <script>
+        //global variables
+        var appendy = "";
+        var typeContents = ["f ff fff j jj jjj f fj fjf j jf jfj",//0
+                            "f<br/>fj<br/>fjf<br/>fjfj<br/>fffff<br/>jjjjjj",//1
+                            "d dd ddd k kk kkk d dk dkd k kd kdk",//2
+                            "d<br/>dk<br/>dkd<br/>dkdk<br/>ddddd<br/>kkkkkk",//3
+                            "f j f j d k d k j f j f k d k d f j",//4
+                            "s ss sss l ll lll s sl sls l ls lsl",//5
+                            "s<br/>sl<br/>sls<br/>slsl<br/>sssss<br/>llllll",//6
+                            "a aa aaa ; ;; ;;; a a; a;a ; ;a ;a;",//7
+                            "a<br/>a;<br/>a;a<br/>a;a;<br/>aaaaa<br/>;;;;;;",//8
+                            "a ; a ; s l s l a s ; l ; a l s ; a",//9
+                            "asdf ;lkj asdf ;lkj asdf ;lkj dfjk;",//10
+                            ";lkj asdf ;lkj fdsa jkl; asdf ;lkj",//11
+                            "as ad af ;l ;k ;j as sl dk fj dfjk",//12
+                            "as ask asks; la lad lads; asdf;lkj",//13
+                            "lass adds fads sad; fall alas alf;",//14
+                            "j a f f a ; s a l a d ; f l a s k",//15
+                            "a<br/>a sad<br/>a sad lad<br/>a sad lad asks<br/>a sad lad asks a<br/>a sad lad asks a lass;",//16
+                            "alfalfa salad; jaffa flask; falls",//17
+                            "alf falls; alas a dad adds jaffas",//18
+                            "all lads add salad; ask a sad dad"];
+
+        var counter = 0;
+        var max = 19;
+        var min = 0
+        function myFunction()
+        {
+            var x = document.getElementById("fieldy").value;
+            appendy = appendy + x;
+            document.getElementById("fieldy").value = "";
+            document.getElementById("demospace").innerHTML = appendy;
+        }
+    //listen for enter/return button
+        var input = document.getElementById("fieldy");
+        input.addEventListener("keyup", function(event)
+        {
+            event.preventDefault();
+            if (event.keyCode === 13)
+            {
+                appendy = appendy + "<br />";
+                document.getElementById("demospace").innerHTML = appendy;
+            }
+        });
+        function nextClicked()
+        {
+            //alert("next clicked");
+            if(counter>max)
+            {
+                alert("that's all, folks!");
+            }else
+            {
+                document.getElementById("matchthis").innerHTML = typeContents[counter];
+                document.getElementById("demospace").innerHTML = "";
+                appendy = "";
+                counter++;
+            }
+        }
+        function surpriseMeClicked()
+        {
+            //alert("um... surprise?");
+            //(math.random() * (max - min + 1)) + min
+            var randomnumber = Math.floor(Math.random()* (max - min + 1)) + min;
+            document.getElementById("matchthis").innerHTML = typeContents[randomnumber];
+            document.getElementById("demospace").innerHTML = "";
+            appendy = "";
+        }
+        function check()
+        {
+            //alert("check clicked");
+            //get innerhtml of text from matchthis
+            var matchthis = document.getElementById("matchthis").innerHTML;
+            //alert(matchthis);
+            //get innerhtml of text from demospace
+            var demospace = document.getElementById("demospace").innerHTML;
+            //alert(demospace);
+            //compare
+            var l = Math.min(matchthis.length, demospace.length);
+            //ALSO, HAVE DIFFERENT CASE TO HANDLE IF PEOPLE ENTERED TOO MANY BITS OR TOO LITTLE
+            var counter = 0;
+            var mistakecounter = 0;
+            for(i=0; i<l; i++)
+            {
+                if(matchthis.charAt(i) != demospace.charAt(i))
+                {
+                    //do something...
+                    //alert("ruh-oh!");
+                    mistakecounter++;
+                    //add counter into array
+                }
+                counter++;
+            }
+            //the lighter version
+            if(mistakecounter>0)
+            {
+                alert("Oops, not quite!");
+            }
+            if(mistakecounter==0 && matchthis.length==demospace.length)
+            {
+                alert("All correct!");
+                nextClicked();
+                
+            }else if(matchthis.length > demospace.length)
+            {
+                alert("Oh, no! You didn't type enough.");
+                
+            }else if(matchthis.length < demospace.length)
+            {
+                alert("Oh, no! You typed too much.");
+            }
+            /*the Snape edition
+            if(mistakecounter>0)
+            {
+                alert("Ruh-oh! There were " + mistakecounter + " mistake(s). Don't disappoint me again.");
+            }else if(matchthis.length == demospace.length)
+            {
+                alert("all correct!");
+            }else if(matchthis.length > demospace.length)
+            {
+                alert("Ooh, you typed too little.");
+            }else if(matchthis.length < demospace.length)
+            {
+                alert("Oops! You typed too much.");
+            }
+            */
+            //cycle through array and highligt bits that were wrong.
+            //put it in demospace using innerhtml.
+            
+            
+        }
+    </script>
+</html>
+
